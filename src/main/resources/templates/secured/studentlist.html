@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="author" content="O. Kalu">
+    <link rel="icon" href="favicon.ico">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.2/cerulean/bootstrap.min.css" rel="stylesheet" integrity="sha384-EmRcsPP774S9MOi4ywB+JXUWjYnBdyInMzG2XsC5siZEUpexqxOMJW358dCYEjPu" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/master.css}">
+    <title>Amine's Library - a demo spring boot webapp</title>
+</head>
+
+<body>
+<header th:fragment="header" xmlns:th="http://www.thymeleaf.org">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a style="padding-right: 2em;" class="navbar-brand" href="/home/home">eLibrary : : : a basic demo webapp using Spring Boot</a>
+    <!--<span style="color: #ffffff;"> &nbsp; | &nbsp;</span>-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" style="border-left: white 1px solid; padding-left: 2em; padding-right: 2em;">
+                    <a class="nav-link" href="/library/secured/studentlist">Browse Students</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+            <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
+            <!--<a style="color: #ffffff; margin-right: 0em;" class="nav-link" href="#">John Doe</a>-->
+            <!--<a href="#" class="btn btn-secondary">Sign In</a>-->
+            </form>
+        </div>
+    </nav>
+</header>
+<div id="mainContainer" class="container">
+    <div style="width: 100%;">
+        <h3 style="display: inline;">Books in our collection</h3>
+        <span style="float: right;">
+                    <a class="btn btn-outline-primary btn-lg" href="/student/new">
+                        <i class="fa-solid fa-book"></i> Add a New Student
+                    </a>
+                </span>
+    </div>
+    <hr/>
+    <div style="font-size: 1em">
+        <!-- table with publishers-->
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">StudentId</th>
+                <th scope="col">StudentNumber</th>
+                <th scope="col">Cpga</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Transcript</th>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="student,iterStat : ${students}">
+                <!--th:onclick="@{document.location='/student/edit/{studentId}'(studentId=${student.studentId})}" -->
+                <th scope="row" th:text="${iterStat.count}+${'.'}"></th>
+                    <!--/*@thymesVar id="studentId" type="templates"*/-->
+                    <td th:text="${student.studentId}"></td>
+                    <td th:text="${student.studentNumber}"></td>
+                    <td th:text="${student.cgpa}"></td>
+                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.transcript.transcriptId}"></td>
+                    <td>
+                        <a th:href="@{/student/edit/{studentId}(studentId=${student.studentId})}">
+                            <i class="fa-regular fa-pen-to-square"></i> Edit
+                        </a>
+                    </td>
+                    <td>
+                        <a th:href="@{/student/delete/{studentId}(studentId=${student.studentId})}">
+                            <i class="fa-solid fa-delete-left"></i> Delete
+                        </a>
+                                <!--                        <a data-toggle="modal" data-target="#confirmDeleteBookModal" th:href="@{'/elibrary/book/delete/' + ${book.bookId}}">Delete</a>-->
+                                <!--                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">-->
+                                <!--                            Launch demo modal-->
+                                <!--                        </button>-->
+                    </td>
+                </tr>
+                </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<footer class="footer">
+    <div style="margin:0 1em 0 1em;">
+        <span class="text-muted">El khayer Amine : : : CS425-SWE</span>
+        <span style="float:right;" class="text-muted">&copy; April 2022</span>
+    </div>
+</footer>
+</body>
+</html>
